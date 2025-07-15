@@ -1,104 +1,377 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* App Brand Colors */
+  --primary: #ff7043;
+  --secondary: #388e3c;
+  --accent: #ffd600;
+  --bg: #f9f9f9;
+  --white: #fff;
+  --text: #232323;
+  --text-muted: #888;
+  --card-bg: #fff;
+  --border: #e4e4e4;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+/* General */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.food-explorer-root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--bg);
+}
+
+/* Header */
+.header {
+  background: var(--white);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.header-title {
+  font-size: 1.6rem;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.searchbar {
+  flex: 1;
+  max-width: 410px;
+  margin: 0 2rem;
   position: relative;
 }
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.searchbar input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  font-size: 1rem;
+  background: #f7f7f7;
+  color: var(--text);
+  transition: border 0.18s;
+}
+.searchbar input[type="text"]:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.menu-btn {
+  display: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: none;
+  border: none;
+  font-size: 2rem;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 900px) {
+  .header {
+    padding: 1rem 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  .searchbar {
+    margin: 0 1rem;
+    max-width: 250px;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+/* Layout */
+.layout {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--bg);
+}
+
+main {
+  flex: 1 1 auto;
+  padding: 2rem 2.5rem;
+  min-width: 0;
+}
+
+@media (max-width: 800px) {
+  main {
+    padding: 1rem 6vw;
+  }
+  .layout {
+    flex-direction: column;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--white);
+  width: 260px;
+  padding: 2rem 1.5rem 2rem 2rem;
+  border-right: 1px solid var(--border);
+  min-height: 100vh;
+  position: sticky;
+  top: 72px;
+  z-index: 20;
+  transition: left 0.25s;
+}
+.sidebar .section-label {
+  color: var(--secondary);
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.sidebar ul {
+  padding: 0 0 0 0.2rem;
+  margin: 0 0 1.2rem 0;
+  list-style: none;
+}
+.sidebar li {
+  margin-bottom: 0.5em;
+}
+.sidebar button, .sidebar .restaurant-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 0.38rem 0.92rem;
+  margin-right: 0.2rem;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar button.active, .sidebar .restaurant-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+@media (max-width: 1000px) {
+  .sidebar {
+    width: 180px;
+    padding: 1.2rem 0.5rem 1.2rem 1.2rem;
+  }
+}
+@media (max-width: 760px) {
+  .sidebar {
+    position: fixed;
+    left: -265px;
+    top: 0;
+    width: 220px;
+    min-width: 180px;
+    min-height: 100vh;
+    height: 100%;
+    z-index: 50;
+    transition: left 0.3s;
+    padding: 1.4rem 1rem;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.06);
+  }
+  .sidebar.open {
+    left: 0;
+    background: var(--white);
+  }
+  .sidebar-overlay {
+    z-index: 49;
+    background: rgba(34,34,34,0.14);
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+  }
+}
+
+@media (max-width: 760px) {
+  .menu-btn {
+    display: inline-block;
+  }
+  .sidebar {
+    top: 0;
+  }
+}
+
+/* Food Card List */
+.food-list {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+@media (max-width: 850px) {
+  .food-list {
+    grid-gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+}
+.empty-list-message {
+  text-align: center;
+  margin-top: 40px;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+}
+
+/* Food Card */
+.food-card {
+  background: var(--card-bg);
+  padding: 1.35rem 1rem 1.18rem 1rem;
+  border-radius: 18px;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: box-shadow 0.19s, border 0.18s;
+  position: relative;
+}
+.food-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 6px 18px -7px var(--primary)11;
+}
+.food-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  background: var(--accent);
+}
+.card-category, .card-restaurant {
+  font-size: 0.92em;
+  color: var(--secondary);
+  margin-bottom: 0.3em;
+}
+.food-card h3 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.14rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.food-card .food-price {
+  font-size: 1.1em;
+  color: var(--primary);
+  font-weight: 500;
+  margin-top: auto;
+}
+.food-card .card-restaurant {
+  color: var(--text-muted);
+}
+.food-card .card-description {
+  color: #444;
+  font-size: 0.98em;
+  margin-bottom: 0.7rem;
+}
+
+/* Modal */
+.modal-backdrop {
+  z-index: 100;
+  position: fixed;
+  background: rgba(32,32,32,0.13);
+  top: 0; left: 0; width: 100vw; height: 100vh;
+}
+.food-detail-modal {
+  z-index: 101;
+  min-width: 310px;
+  max-width: 92vw;
+  width: 380px;
+  margin: 0 auto;
+  background: var(--white);
+  position: fixed;
+  left: 50%; top: 52%;
+  transform: translate(-50%,-50%);
+  border-radius: 22px;
+  box-shadow: 0 8px 28px rgba(32,32,32,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPopin 0.22s cubic-bezier(.6,-0.28,.74,0.05);
+}
+@keyframes modalPopin {
+  0% { transform: scale(0.88) translate(-50%,-50%); opacity: 0.5 }
+  60% { transform: scale(1.03) translate(-50%,-50%)  }
+  100% { transform: scale(1) translate(-50%,-50%) }
+}
+.food-detail-image {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  background: var(--accent);
+}
+.food-detail-content {
+  padding: 1.6rem 1.3rem 1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.food-detail-title {
+  font-size: 1.26rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.2rem;
+}
+
+.food-detail-restaurant {
+  font-size: 1rem;
+  color: var(--secondary);
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+.food-detail-description {
+  font-size: 1.01em;
+  color: #333;
+}
+.food-detail-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 32px;
+  font-size: 1.3rem;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.food-detail-price {
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer-info {
+  font-size: 0.98em;
+  color: var(--text-muted);
+  padding: 1.15em 0 1.25em 0;
+  background: transparent;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 570px) {
+  .header-title {
+    font-size: 1.03rem;
+  }
+  .searchbar input[type="text"] {
+    font-size: 0.99em;
+    padding: 0.44rem 0.85rem;
+  }
+  .sidebar {
+    font-size: 0.98em;
+    width: 148px;
+    min-width: 115px;
+  }
+  main {
+    padding: 1rem 3vw;
   }
 }
